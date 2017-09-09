@@ -20,3 +20,18 @@ LinkedList.prototype.addFirst = function(data) {
     }
     this.head = newNode;
 }
+
+// function to insert node at the end of the list
+LinkedList.prototype.addLast = function(data) {
+    var newNode = new Node(data);
+    var current = this.head;
+    if (this.head) {
+        while (current.next != null) {
+            current = current.next;
+        }
+        current.next = newNode;
+    } else {
+        this.head = newNode;
+    }
+
+}
