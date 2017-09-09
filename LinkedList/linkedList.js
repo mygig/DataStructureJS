@@ -11,7 +11,6 @@ function Node(data) {
     this.next = null;
 }
 
-
 // function to insert node at begining of the list
 LinkedList.prototype.addFirst = function(data) {
     var newNode = new Node(data);
@@ -20,5 +19,4 @@ LinkedList.prototype.addFirst = function(data) {
         newNode.next = this.head
     }
     this.head = newNode;
-
 }
