@@ -2,8 +2,7 @@ var Person = {
     full_name: function() {
         return this.first_name + " " + this.last_name;
     }
-}
-
+};
 /**
  * first way of bootstrapping object with values.
  */
@@ -27,6 +26,7 @@ function PersonFactory(first_name, last_name) {
     person.last_name = last_name;
     return person;
 }
+
 
 var monu = new PersonFactory("maui", "zaui");
 console.log(monu.full_name());
