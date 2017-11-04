@@ -50,10 +50,26 @@ BST.prototype.depthFirstTraversal = function(iteratorFunc, order) {
         iteratorFunc(this.value);
 }
 
-var log = function(value) {
+// breadth first traveral 
+BST.prototype.breadthFirstTraversal = function(iteratorFunc) {
+    // define a queue using array
+    // this refers to the current node.
+    var queue = [this];
+    while (queue.length) {
+        var treeNode = queue.shift();
+        iteratorFunc(treeNode);
+        if (treeNode.left) queue.push(treeNode.left);
+        if (treeNode.right) queue.push(treeNode.right);
+    }
+}
+
+var logDFS = function(value) {
     console.log(value);
 };
 
+var logBFS = function(node) {
+    console.log(node.value);
+};
 var bst = new BST(50);
 bst.insert(10);
 bst.insert(30);
@@ -61,4 +77,5 @@ bst.insert(20);
 bst.insert(44);
 bst.insert(70);
 
-bst.depthFirstTraversal(log, 'inorder');
+// bst.depthFirstTraversal(logDFS, 'inorder');
+bst.breadthFirstTraversal(logBFS);
