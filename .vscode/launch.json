@@ -7,6 +7,6 @@
         "type": "node",
         "request": "launch",
         "name": "Launch Program",
-        "program": "/Users/pranay/Documents/udemy/DataStructureJS/JSBasic/basic.js"
+        "program": "/Users/pranay/Documents/udemy/DataStructureJS/Graph/graph.js"
     }]
 }
