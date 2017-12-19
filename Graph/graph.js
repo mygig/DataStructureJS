@@ -1,4 +1,4 @@
-// graph representation using adjacency list.
+// graph representation for unweighted undirected graph using adjacency list.
 
 /**
  * @constructor
@@ -56,15 +56,56 @@ Graph.prototype.removeVertex = function(vertex) {
         this.removeEdge(adjVertex, vertex);
     }
 };
+/**
+ * @method to print graph
+ */
+Graph.prototype.print = function() {
+    console.log(this.vertices.map(function(vertex) {
+        return (vertex + ' -> ' + this.edges[vertex].join(', ')).trim();
+    }, this).join(' | '));
+};
+
+/**
+ * @method Breadth first traversal
+ * @param starting vertex
+ */
+Graph.prototype.traverseBFS = function(vertex) {
+    var index = this.vertices.indexOf(vertex)
+    if (index === -1) {
+        return console.log("vertex not found in the graph");
+    }
+    var queue = [];
+    queue.push(vertex);
+    var visited = [];
+    visited[vertex] = true;
+    while (queue.length) {
+        vertex = queue.shift();
+        console.log(vertex);
+        // find the adjacent vertex of the deleted vertex from queue
+        for (var i = 0; i < this.edges[vertex].length; i++) {
+            if (!visited[this.edges[vertex][i]]) {
+                visited[this.edges[vertex][i]] = true;
+                queue.push(this.edges[vertex][i]);
+            }
+        }
+
+    }
+};
 
 var graph = new Graph();
-graph.addVertex(0);
 graph.addVertex(1);
 graph.addVertex(2);
 graph.addVertex(3);
 graph.addVertex(4);
-graph.addEdge(1, 4);
-// graph.removeEdge(1, 4);
-console.log(graph);
-graph.removeVertex(4);
-console.log(graph);
+graph.addVertex(5);
+graph.addVertex(6);
+graph.print(); // 1 -> | 2 -> | 3 -> | 4 -> | 5 -> | 6 ->
+graph.addEdge(1, 2);
+graph.addEdge(1, 5);
+graph.addEdge(2, 3);
+graph.addEdge(2, 5);
+graph.addEdge(3, 4);
+graph.addEdge(4, 5);
+graph.addEdge(4, 6);
+graph.print(); // 1 -> 2, 5 | 2 -> 1, 3, 5 | 3 -> 2, 4 | 4 -> 3, 5, 6 | 5 -> 1, 2, 4 | 6 -> 4
+graph.traverseBFS(1);
