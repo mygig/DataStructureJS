@@ -4,7 +4,6 @@ function BST(value) {
     this.left = null;
     this.right = null;
 }
-
 // insert method
 BST.prototype.insert = function(value) {
     if (value < this.value) {
