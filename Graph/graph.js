@@ -70,7 +70,7 @@ Graph.prototype.print = function() {
  * @param starting vertex
  */
 Graph.prototype.traverseBFS = function(vertex) {
-    var index = this.vertices.indexOf(vertex)
+    var index = this.vertices.indexOf(vertex);
     if (index === -1) {
         return console.log("vertex not found in the graph");
     }
@@ -91,7 +91,69 @@ Graph.prototype.traverseBFS = function(vertex) {
 
     }
 };
+/**
+ * method to find the shortest path
+ * @param {*} srcVertex 
+ * @param {*} destVertex 
+ */
+Graph.prototype.pathFromTo = function (srcVertex, destVertex){
+    var index = this.vertices.indexOf(srcVertex);
+    if (index === -1) {
+        return console.log("vertex not found in the graph");
+    }
+    var queue = [];
+    queue.push(srcVertex);
+    var visited = [];
+    visited[srcVertex] = true;
+    var paths = [];
+  
+    while(queue.length) {
+      var vertex = queue.shift();
+      for(var i = 0; i < this.edges[vertex].length; i++) {
+        if(!visited[this.edges[vertex][i]]) {
+          visited[this.edges[vertex][i]] = true;
+          queue.push(this.edges[vertex][i]);
+          // save paths between vertices
+          paths[this.edges[vertex][i]] = vertex;
+        }
+      }
+    }
+    if(!visited[destVertex]) {
+      return undefined;
+    }
+  
+    var path = [];
+    for(var j = destVertex; j != srcVertex; j = paths[j]) {
+      path.push(j);
+    }
+    path.push(j);
+    return path.reverse().join('-');
+}
 
+/**
+ * @method depth first search traversal iterative
+ */
+Graph.prototype.traverseDFS = function(vertex){
+    var index = this.vertices.indexOf(vertex);
+    if(index === -1){
+        return console.log("vertex not found !");
+    }
+
+    var stack = [];
+    stack.push(vertex);
+    var visited = [];
+    visited[vertex] = true;
+    while(stack.length){
+        var vertex = stack.pop();
+        console.log(vertex)
+        for(var i=0 ;i<this.edges[vertex].length; i++){
+            if(!visited[this.edges[vertex][i]]){
+                stack.push(this.edges[vertex][i]);
+                visited[this.edges[vertex][i]] = true;
+            }
+        }
+    }
+}
 var graph = new Graph();
 graph.addVertex(1);
 graph.addVertex(2);
@@ -108,4 +170,8 @@ graph.addEdge(3, 4);
 graph.addEdge(4, 5);
 graph.addEdge(4, 6);
 graph.print(); // 1 -> 2, 5 | 2 -> 1, 3, 5 | 3 -> 2, 4 | 4 -> 3, 5, 6 | 5 -> 1, 2, 4 | 6 -> 4
+console.log("BFS traversal as below")
 graph.traverseBFS(1);
+// console.log(graph.pathFromTo(1,6));
+console.log("DFS traversal as below:")
+graph.traverseDFS(1)
