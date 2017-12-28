@@ -92,6 +92,31 @@ Graph.prototype.traverseBFS = function(vertex) {
     }
 };
 /**
+ * @method depth first search traversal iterative solution
+ */
+Graph.prototype.traverseDFS = function(vertex){
+    var index = this.vertices.indexOf(vertex);
+    if(index === -1){
+        return console.log("vertex not found !");
+    }
+    var stack = [];
+    stack.push(vertex);
+    var visited = [];
+    visited[vertex] = true;
+    while(stack.length){
+        var vertex = stack[stack.length-1];
+        var popVertex =  stack.pop();
+        console.log(popVertex);
+        for(var i=0 ;i<this.edges[vertex].length; i++){
+            if(!visited[this.edges[vertex][i]]){
+                stack.push(this.edges[vertex][i]);
+                visited[this.edges[vertex][i]] = true;
+            }
+        }
+    }
+}
+
+/**
  * method to find the shortest path
  * @param {*} srcVertex 
  * @param {*} destVertex 
@@ -128,31 +153,6 @@ Graph.prototype.pathFromTo = function (srcVertex, destVertex){
     }
     path.push(j);
     return path.reverse().join('-');
-}
-
-/**
- * @method depth first search traversal iterative
- */
-Graph.prototype.traverseDFS = function(vertex){
-    var index = this.vertices.indexOf(vertex);
-    if(index === -1){
-        return console.log("vertex not found !");
-    }
-
-    var stack = [];
-    stack.push(vertex);
-    var visited = [];
-    visited[vertex] = true;
-    while(stack.length){
-        var vertex = stack.pop();
-        console.log(vertex)
-        for(var i=0 ;i<this.edges[vertex].length; i++){
-            if(!visited[this.edges[vertex][i]]){
-                stack.push(this.edges[vertex][i]);
-                visited[this.edges[vertex][i]] = true;
-            }
-        }
-    }
 }
 
 Graph.prototype.traverseDFSRecursive = function(vertex, fn) {
@@ -214,3 +214,5 @@ graph.addEdge('E', 'I');
 // graph.print();
 // graph.traverseBFS('A');
 graph.traverseDFSRecursive('A',function(vertex){console.log(vertex)});
+console.log("-------------------");
+graph.traverseDFS('A');
