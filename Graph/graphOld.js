@@ -116,7 +116,26 @@ Graph.prototype.traverseDFS = function(vertex){
     }
 }
 
-/**
+Graph.prototype.traverseDFSRecursive = function(vertex, fn) {
+    if(!~this.vertices.indexOf(vertex)) {
+      return console.log('Vertex not found');
+    }
+    var visited = [];
+    this._traverseDFS(vertex, visited, fn);
+  };
+  Graph.prototype._traverseDFS = function(vertex, visited, fn) {
+    visited[vertex] = true;
+    if(this.edges[vertex] !== undefined) {
+      fn(vertex);
+    }
+    for(var i = 0; i < this.edges[vertex].length; i++) {
+      if(!visited[this.edges[vertex][i]]) {
+        this._traverseDFS(this.edges[vertex][i], visited, fn);
+      }
+    }
+  };
+
+  /**
  * method to find the shortest path
  * @param {*} srcVertex 
  * @param {*} destVertex 
@@ -155,24 +174,6 @@ Graph.prototype.pathFromTo = function (srcVertex, destVertex){
     return path.reverse().join('-');
 }
 
-Graph.prototype.traverseDFSRecursive = function(vertex, fn) {
-    if(!~this.vertices.indexOf(vertex)) {
-      return console.log('Vertex not found');
-    }
-    var visited = [];
-    this._traverseDFS(vertex, visited, fn);
-  };
-  Graph.prototype._traverseDFS = function(vertex, visited, fn) {
-    visited[vertex] = true;
-    if(this.edges[vertex] !== undefined) {
-      fn(vertex);
-    }
-    for(var i = 0; i < this.edges[vertex].length; i++) {
-      if(!visited[this.edges[vertex][i]]) {
-        this._traverseDFS(this.edges[vertex][i], visited, fn);
-      }
-    }
-  };
 var graph = new Graph();
 // graph.addVertex(1);
 // graph.addVertex(2);
